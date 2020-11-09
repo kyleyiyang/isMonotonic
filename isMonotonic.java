@@ -1,17 +1,13 @@
 class Solution {
     public boolean isMonotonic(int[] A) {
-        List<Integer> ans = new ArrayList<>();
-        for (int a=0;a<A.length;a++) {
-            while (a<A.length-1 && A[a]==A[a+1]) {
-                a++;
-            }
-            ans.add(A[a]);
-        }
-        System.out.println(ans);
-        for (int i=0;i<ans.size()-2;i++) {
-            if (comparison(ans.get(i),ans.get(i+1))!=comparison(ans.get(i+1),ans.get(i+2))) {
+        for (int i=0;i<A.length-2;i++) {
+            i=rec(A,i);
+            int j=rec(A,i+1);
+            int k=rec(A,j+1);
+            if (k<A.length && comparison(A[i],A[j])!=comparison(A[j],A[k])) {
                 return false;
             }
+            i=j-1;
         }
         return true;
     }
@@ -21,5 +17,11 @@ class Solution {
         } else {
             return false;
         }
+    }
+    public static int rec(int[] A, int i) {
+        while (i<A.length-1 && A[i]==A[i+1]) {
+            i++;
+        }
+        return i;
     }
 }
